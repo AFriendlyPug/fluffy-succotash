@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Skeb - Show Artist Price on Cards
 // @namespace    skeb-price-display
-// @version      1.9.7
+// @version      2.0.7
 // @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMTQuNjQ1MzA5JSIgeDI9Ijg1LjM1NDY5MSUiIHkxPSIxNC42NDUzMDklIiB5Mj0iODUuMzYzNDkyJSI+PHN0b3Agb2Zmc2V0PSIuMiIgc3RvcC1jb2xvcj0iIzMwYjM5NiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFlNWU3MSIvPjwvbGluZWFyR3JhZGllbnQ+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJub256ZXJvIj48Y2lyY2xlIGN4PSIxOS45OTM3NSIgY3k9IjE5Ljk4MTI1IiBmaWxsPSJ1cmwoI2EpIiByPSIxNy43NTMxMjUiLz48cGF0aCBkPSJtMTguNzg0Mzc1IDEzLjk4NzUtNy4zNTYyNSAyMS41NDY4NzVjLS44MTI1LS40NDY4NzUtMS41ODEyNS0uOTU5Mzc1LTIuMzA5Mzc1LTEuNTI1bDEuMTM0Mzc1LTMuMjY4NzUtMi41MjgxMjUtLjg2ODc1Ljg1OTM3NS0yLjU2ODc1IDIuNTI4MTI1Ljg2ODc1IDEuNzI4MTI1LTUuMDU2MjUtMi41MjgxMjUtLjg2ODc1Ljg2ODc1LTIuNTM3NSAyLjUyODEyNS44Njg3NSAxLjcyODEyNS01LjA1NjI1LTIuNTI4MTI1LS44Njg3NS44Njg3NS0yLjUzNzUgMi41MjgxMjUuODY4NzUgMS42ODc1LTQuOTkzNzUtMi40OTY4NzUtLjkwOTM3NS40NDA2MjUtMS4yNjg3NSA1LjA1NjI1IDEuNzI4MTI1LS4zNzgxMjUgMS4xLTEuNzY4NzUgNS4xODQzNzUtLjA1OTM3NS4xNTkzNzV6bS0xMi45OTY4NzUgMTYuNjQwNjI1Yy42NjI1Ljg4NDM3NSAxLjQwNjI1IDEuNzAzMTI1IDIuMjE4NzUgMi40NDY4NzVsLjUxODc1LTEuNTE1NjI1em0zLjI5Mzc1LTEzLjAxODc1IDMuOCAxLjI5Njg3NS44NjU2MjUtMi41MzQzNzUtMy44LTEuMjk2ODc1em0tMi41OTA2MjUgNy41OTA2MjUgMy44IDEuMjk2ODc1Ljg2NTYyNS0yLjUzNDM3NS0zLjgtMS4yOTY4NzV6bTMxLjI1OTM3NS01LjIxODc1YzAtMi41MzQzNzUtLjUzNDM3NS00Ljk0MDYyNS0xLjQ5MDYyNS03LjExODc1bC0xMy4zMjUtNC41NTkzNzUtOS42MDMxMjUgMjguMTM0Mzc1YzIuMDU5Mzc1LjgzNDM3NSA0LjMwNjI1IDEuMyA2LjY2NTYyNSAxLjMgOS44MDYyNSAwIDE3Ljc1MzEyNS03Ljk0Njg3NSAxNy43NTMxMjUtMTcuNzUzMTI1em0tMjYuMDcxODc1LTkuOTcxODc1IDMuOCAxLjI5Njg3NS44NjU2MjUtMi41MzQzNzUtMy44LTEuMjk2ODc1eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Im0xOS45OTM3NSAyLjIzMTI1YzkuODA2MjUgMCAxNy43NTMxMjUgNy45NDY4NzUgMTcuNzUzMTI1IDE3Ljc1MzEyNXMtNy45NDY4NzUgMTcuNzUzMTI1LTE3Ljc1MzEyNSAxNy43NTMxMjUtMTcuNzUzMTI1LTcuOTQ2ODc1LTE3Ljc1MzEyNS0xNy43NTMxMjVjMC05LjgwNjI1IDcuOTQ2ODc1LTE3Ljc1MzEyNSAxNy43NTMxMjUtMTcuNzUzMTI1bTAtMi4yMjgxMjVjLTExLjAzNDM3NSAwLTE5Ljk4MTI1IDguOTQ2ODc1LTE5Ljk4MTI1IDE5Ljk4MTI1czguOTQ2ODc1IDE5Ljk4MTI1IDE5Ljk4MTI1IDE5Ljk4MTI1IDE5Ljk4MTI1LTguOTQ2ODc1IDE5Ljk4MTI1LTE5Ljk4MTI1LTguOTQ2ODc1LTE5Ljk4MTI1LTE5Ljk4MTI1LTE5Ljk4MTI1eiIgZmlsbD0iIzFlNWU3MSIvPjwvZz48L3N2Zz4=
 // @description  Shows artist request prices on Skeb cards (colour-coded) with a max-price filter. Prices are cached permanently and only refreshed when you open that artist's profile.
 // @match        https://skeb.jp/*
@@ -15,8 +15,25 @@
   const PROCESSED_ATTR = 'data-skeb-price-done';
   const REQUEST_DELAY_MS = 600;
 
-  const CHEAP = 5000;
-  const EXPENSIVE = 30000;
+  // Colour-scale thresholds (user-configurable via the cog settings menu)
+  const SETTINGS_KEY = 'skebPriceSettings';
+  const DEFAULT_SETTINGS = { cheap: 5000, expensive: 30000 };
+
+  function getSettings() {
+    try {
+      const s = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+      return {
+        cheap: Number(s.cheap) > 0 ? Number(s.cheap) : DEFAULT_SETTINGS.cheap,
+        expensive: Number(s.expensive) > 0 ? Number(s.expensive) : DEFAULT_SETTINGS.expensive,
+      };
+    } catch (e) {
+      return { ...DEFAULT_SETTINGS };
+    }
+  }
+
+  function saveSettings(settings) {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
 
   const CLOSED_RE = /stopped|closed|not\s*accepting|受付停止|停止中/i;
   const USER_RE = /^\/@([^/?#]+)$/;
@@ -191,9 +208,19 @@
 
   // ---- Colour scale ----
   function priceColor(amount) {
-    let t = (amount - CHEAP) / (EXPENSIVE - CHEAP);
+    const { cheap, expensive } = getSettings();
+    const span = Math.max(expensive - cheap, 1);
+    let t = (amount - cheap) / span;
     t = Math.min(1, Math.max(0, t));
     return `hsl(${120 * (1 - t)}, 75%, 42%)`;
+  }
+
+  // Recolour every visible price tag (used after settings change)
+  function recolorAllTags() {
+    document.querySelectorAll('.skeb-price-tag').forEach(t => {
+      const amount = Number(String(t.textContent).replace(/[^0-9]/g, ''));
+      if (isFinite(amount)) t.style.background = priceColor(amount);
+    });
   }
 
   // ---- UI ----
@@ -380,36 +407,6 @@
     bar.className = 'field is-grouped is-align-items-center is-justify-content-center';
     bar.style.cssText = 'flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 1.5rem 0; max-width: 100%; box-sizing: border-box; padding: 10px 0.75rem; background: #fff; border-radius: 5px; position: sticky; top: 0.5rem; z-index: 30; box-shadow: 0 2px 8px rgba(0,0,0,0.08);';
 
-    // Responsive horizontal spacing to match Skeb's container gutters
-    if (!document.querySelector('#skeb-price-filter-style')) {
-      const style = document.createElement('style');
-      style.id = 'skeb-price-filter-style';
-      style.textContent = `
-        #skeb-price-filter-bar,
-        #skeb-price-filter-bar .label,
-        #skeb-price-filter-bar .input,
-        #skeb-price-filter-bar .button,
-        #skeb-price-filter-bar .checkbox,
-        #skeb-price-filter-bar #skeb-price-filter-count {
-          font-size: 1rem !important;
-        }
-        /* Bulma adds its own margins between grouped controls; zero them so
-           the flex gap is the single source of spacing */
-        #skeb-price-filter-bar .control:not(:last-child),
-        #skeb-price-filter-bar > * {
-          margin-right: 0 !important;
-          margin-bottom: 0 !important;
-        }
-        @media screen and (min-width: 1024px) {
-          #skeb-price-filter-bar {
-            margin-top: 3rem !important;
-            margin-left: 3rem !important;
-            margin-right: 3rem !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
 
     const label = document.createElement('label');
     label.className = 'label is-small';
@@ -511,6 +508,170 @@
     bar.appendChild(count);
 
     host.insertAdjacentElement('afterbegin', bar);
+  }
+
+  // Shared stylesheet for the filter bar and settings menu
+  function ensureStyles() {
+    if (document.querySelector('#skeb-price-filter-style')) return;
+      const style = document.createElement('style');
+      style.id = 'skeb-price-filter-style';
+      style.textContent = `
+        #skeb-price-filter-bar,
+        #skeb-price-filter-bar .label,
+        #skeb-price-filter-bar .input,
+        #skeb-price-filter-bar .button,
+        #skeb-price-filter-bar .checkbox,
+        #skeb-price-filter-bar #skeb-price-filter-count {
+          font-size: 1rem !important;
+        }
+        #skeb-price-settings-menu,
+        #skeb-price-settings-menu .label,
+        #skeb-price-settings-menu .input,
+        #skeb-price-settings-menu .button,
+        #skeb-price-settings-menu p,
+        #skeb-price-settings-menu span {
+          font-size: 1rem !important;
+        }
+        /* Bulma adds its own margins between grouped controls; zero them so
+           the flex gap is the single source of spacing */
+        #skeb-price-filter-bar .control:not(:last-child),
+        #skeb-price-filter-bar > * {
+          margin-right: 0 !important;
+          margin-bottom: 0 !important;
+        }
+        @media screen and (min-width: 1024px) {
+          #skeb-price-filter-bar {
+            margin-top: 3rem !important;
+            margin-left: 3rem !important;
+            margin-right: 3rem !important;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+  }
+
+  // ================= Settings menu (cog in navbar) =================
+
+  function injectSettingsMenu() {
+    if (document.querySelector('#skeb-price-settings-btn')) return;
+
+    // Skeb's navbar: place the cog inside the navbar container, at the end
+    const navEnd = document.querySelector(
+      '.navbar > .container, .navbar .container, .navbar .navbar-end, nav .navbar-end, .navbar'
+    );
+    if (!navEnd) return;
+
+    const item = document.createElement('div');
+    item.className = 'navbar-item';
+    item.style.position = 'relative';
+
+    const btn = document.createElement('button');
+    btn.id = 'skeb-price-settings-btn';
+    btn.title = 'Skeb price script settings';
+    btn.style.cssText = `
+      background: none; border: none; cursor: pointer; padding: 6px;
+      line-height: 0; color: rgb(74, 74, 74); display: inline-flex; align-items: center;
+    `;
+    // Flat 2D gear icon, inherits currentColor
+    btn.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="21.8833" height="21.8833" viewBox="0 0 24 24"
+           fill="currentColor" aria-hidden="true">
+        <path d="M19.14 12.94a7.07 7.07 0 0 0 .06-.94 7.07 7.07 0 0 0-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.24 7.24 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.58.24-1.12.55-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.65 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.23.4.32.61.22l2.39-.96c.5.39 1.04.7 1.62.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54a7.24 7.24 0 0 0 1.62-.94l2.39.96c.21.1.48.01.61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/>
+      </svg>
+    `;
+
+    const menu = document.createElement('div');
+    menu.id = 'skeb-price-settings-menu';
+    menu.style.cssText = `
+      display: none; position: absolute; top: 100%; right: 0; z-index: 100;
+      background: #fff; border: 1px solid rgba(128,128,128,0.3);
+      border-radius: 5px; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      padding: 14px; width: 230px; color: #363636;
+    `;
+
+    function makeRow(labelText, value) {
+      const row = document.createElement('div');
+      row.style.cssText = 'margin-bottom: 10px;';
+      const lbl = document.createElement('label');
+      lbl.className = 'label is-small';
+      lbl.textContent = labelText;
+      lbl.style.marginBottom = '4px';
+      const inp = document.createElement('input');
+      inp.className = 'input is-small';
+      inp.type = 'number';
+      inp.min = '0';
+      inp.step = '500';
+      inp.value = value;
+      inp.style.cssText = 'border-radius: 4px; background: #fff;';
+      row.appendChild(lbl);
+      row.appendChild(inp);
+      return { row, inp };
+    }
+
+    const settings = getSettings();
+    const cheapRow = makeRow('Cheap price \u00a5 (green at or below)', settings.cheap);
+    const expensiveRow = makeRow('Expensive price \u00a5 (red at or above)', settings.expensive);
+
+    const hint = document.createElement('p');
+    hint.className = 'is-size-7 has-text-grey';
+    hint.style.marginBottom = '10px';
+    hint.textContent = 'Price tags fade green \u2192 red between these two values.';
+
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'button is-small is-primary';
+    saveBtn.textContent = 'Save';
+    saveBtn.style.borderRadius = '4px';
+
+    const status = document.createElement('span');
+    status.className = 'is-size-7 has-text-grey';
+    status.style.marginLeft = '8px';
+
+    saveBtn.addEventListener('click', () => {
+      let cheap = Number(cheapRow.inp.value);
+      let expensive = Number(expensiveRow.inp.value);
+      if (!(cheap > 0)) cheap = DEFAULT_SETTINGS.cheap;
+      if (!(expensive > 0)) expensive = DEFAULT_SETTINGS.expensive;
+      if (expensive <= cheap) {
+        status.textContent = 'Expensive must be higher';
+        return;
+      }
+      saveSettings({ cheap, expensive });
+      recolorAllTags();
+      status.textContent = 'Saved';
+      setTimeout(() => { status.textContent = ''; }, 1500);
+    });
+
+    menu.appendChild(cheapRow.row);
+    menu.appendChild(expensiveRow.row);
+    menu.appendChild(hint);
+    menu.appendChild(saveBtn);
+    menu.appendChild(status);
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    });
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target)) menu.style.display = 'none';
+    });
+
+    item.appendChild(btn);
+    item.appendChild(menu);
+
+    // IMPORTANT: never insertBefore() into the Vue-managed navbar — it can
+    // break Nuxt hydration and blank the page. Appending at the end is safe.
+    try {
+      navEnd.appendChild(item);
+    } catch (e) {
+      /* never let injection break the page */
+    }
+  }
+
+  function injectSettingsMenuSafely() {
+    // Wait until the app has hydrated before touching the navbar
+    if (document.readyState !== 'complete') return;
+    if (!document.querySelector('#__nuxt, #app, .navbar')) return;
+    try { injectSettingsMenu(); } catch (e) { /* ignore */ }
   }
 
   // ================= Card processing =================
@@ -635,6 +796,11 @@
   }
 
   function run() {
+    ensureStyles();
+
+    // The settings cog lives in the navbar on every page
+    injectSettingsMenuSafely();
+
     // The filter bar persists across SPA navigation — remove it when leaving
     // listing pages so it doesn't linger on excluded/non-listing pages
     if (!isArtistListingPage()) {
